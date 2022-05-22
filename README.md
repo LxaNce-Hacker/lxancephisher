@@ -90,7 +90,7 @@ $ docker run --rm -it lxance-hacker/lxphisher
 
 ### Find Me on :
 <p align="left">
-  <a href="https://github.com/LxaNce-Hacker" target="_blank"><img src="https://img.shields.io/badge/Github-LxaNce-Hacker-green?style=for-the-badge&logo=github"></a>
+  <a href="https://github.com/LxaNce-Hacker" target="_blank"><img src="https://img.shields.io/badge/Github-LxaNce--Hacker-green?style=for-the-badge&logo=github"></a>
   <a href="https://www.instagram.com/_____" target="_blank"><img src="https://img.shields.io/badge/IG-%40lxance-red?style=for-the-badge&logo=instagram"></a>
   <a href="https://m.me/________l" target="_blank"><img src="https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger"></a>
 </p>
