@@ -9,4 +9,4 @@ else
 fi
 
 cd $LXPHISHER_ROOT
-bash ./LxaNce.sh
+bash ./lxphisher.sh
