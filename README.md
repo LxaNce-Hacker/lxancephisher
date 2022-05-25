@@ -1,7 +1,7 @@
 <!-- lxphisher -->
 
 <p align="center">
-  <img src=".imgs/logo.png">
+  <img src=".img/logo.png">
 </p>
 
 <p align="center">
