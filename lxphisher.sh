@@ -799,6 +799,7 @@ main_menu() {
 		36)
 			website="cloud"
 			mask='https://www.cloudskillsboost.google-users-sign_in'
+			tunnel_menu;;
 		99)
 			about;;
 		0 | 00 )
