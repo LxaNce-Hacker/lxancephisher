@@ -6,10 +6,10 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-2.2-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/LxaNce-Hacker/LxPhisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/LxaNce-Hacker/LxPhisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/issues/LxaNce-Hacker/LxPhisher?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/LxaNce-Hacker/LxPhisher?color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/github/license/lxance/RealLxPhisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/lxance-hacker/RealLxPhisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/LxaNce/RealLxPhisher?color=red&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/LxaNce-Hacker/RealLxPhisher?label=Fork&color=teal&style=for-the-badge">
 </p>
 
 <p align="center">
@@ -50,12 +50,12 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 
 - Just, Clone this repository -
 ```
-$ git clone https://github.com/LxaNce-Hacker/LxPhisher
+$ git clone https://github.com/LxaNce-Hacker/RealLxPhisher
 ```
 
 - Change to cloned directory and run `lxphisher.sh` -
 ```
-$ cd LxPhisher
+$ cd RealLxPhisher
 $ bash lxphisher.sh
 ```
 
@@ -63,8 +63,8 @@ $ bash lxphisher.sh
 
 ### Run on Docker
 ```
-$ docker pull lxance-hacker/lxphisher
-$ docker run --rm -it lxance-hacker/lxphisher
+$ docker pull LxaNce-Hacker/RealLxPhisher
+$ docker run --rm -it LxaNce-Hacker/RealLxPhisher
 ```
 
 ### Dependencies
