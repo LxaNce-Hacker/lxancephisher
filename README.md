@@ -6,10 +6,10 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-2.2-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/lxance/RealLxPhisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/lxance-hacker/RealLxPhisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/license/LxaNce/RealLxPhisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/LxaNce/RealLxPhisher?style=for-the-badge">
   <img src="https://img.shields.io/github/issues/LxaNce/RealLxPhisher?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/LxaNce-Hacker/RealLxPhisher?label=Fork&color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/LxaNce/RealLxPhisher?label=Fork&color=teal&style=for-the-badge">
 </p>
 
 <p align="center">
