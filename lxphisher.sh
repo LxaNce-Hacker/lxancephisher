@@ -310,7 +310,7 @@ about() {
 	cat <<- EOF
 		${GREEN}Author   ${RED}:  ${ORANGE}Prince Katiyar ${RED}[ ${ORANGE}LxaNce-Hacker ${RED}]
 		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/LxaNce-Hacker
-		${GREEN}Social   ${RED}:  ${CYAN}https://Coming.soon...
+		${GREEN}Social   ${RED}:  ${CYAN}https://lxance.xyz
 		${GREEN}Version  ${RED}:  ${ORANGE}2.2
 
 		${REDBG}${WHITE} Thanks : For Support ${RESETBG}
