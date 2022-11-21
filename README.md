@@ -6,10 +6,10 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-2.2-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/LxaNce/RealLxPhisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/LxaNce/RealLxPhisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/issues/LxaNce/RealLxPhisher?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/LxaNce/RealLxPhisher?label=Fork&color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/github/license/LxaNce/lxancephisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/LxaNce/lxancephisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/LxaNce/lxancephisher?color=red&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/LxaNce/lxancephisher?label=Fork&color=teal&style=for-the-badge">
 </p>
 
 <p align="center">
@@ -50,32 +50,32 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 
 - Just, Clone this repository -
 ```
-$ git clone https://github.com/LxaNce-Hacker/RealLxPhisher
+$ git clone https://github.com/LxaNce-Hacker/lxancephisher
 ```
 
 - Change to cloned directory and run `lxphisher.sh` -
 ```
-$ cd RealLxPhisher
-$ bash lxphisher.sh
+$ cd lxancephisher
+$ bash lxancephisher.sh
 ```
 
 - On first launch, It'll install the dependencies and that's it. `lxphisher` is installed.
 
 ### Run on Docker
 ```
-$ docker pull LxaNce-Hacker/RealLxPhisher
-$ docker run --rm -it LxaNce-Hacker/RealLxPhisher
+$ docker pull LxaNce-Hacker/lxancephisher
+$ docker run --rm -it LxaNce-Hacker/lxancephisher
 ```
 
 ### Dependencies
 
-**`lxphisher`** requires following programs to run properly - 
+**`lxancephisher`** requires following programs to run properly - 
 - `php`
 - `wget`
 - `curl`
 - `git`
 
-> All the dependencies will be installed automatically when you run `LxPhisher` for the first time.
+> All the dependencies will be installed automatically when you run `lxancephisher` for the first time.
 
 > Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali/Parrot`**, **`Arch Linux/Manjaro`**, **`Fedora`**
 
