@@ -1,12 +1,6 @@
-FROM debian:latest
-LABEL MAINTAINER="https://github.com/LxaNce-Hacker/LxPhisher"
-
-WORKDIR /lxphisher/
-ADD . /lxphisher
-
-RUN apt update && \
-    apt full-upgrade -y && \
-    apt install -y curl unzip wget && \
-    apt install --no-install-recommends -y php && \
-    apt clean
-CMD ["./lxphisher.sh"]
+FROM alpine:latest
+LABEL MAINTAINER="https://github.com/LxaNce-Hacker/lxancephisher"
+WORKDIR /lxancephisher/
+ADD . /lxancephisher
+RUN apk add --no-cache bash ncurses curl unzip wget php 
+CMD "./lxancephisher.sh"
