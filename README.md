@@ -6,10 +6,10 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-3.1-green?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/LxaNce/lxancephisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/stars/LxaNce/lxancephisher?style=for-the-badge">
-  <img src="https://img.shields.io/github/issues/LxaNce/lxancephisher?color=red&style=for-the-badge">
-  <img src="https://img.shields.io/github/forks/LxaNce/lxancephisher?label=Fork&color=teal&style=for-the-badge">
+  <img src="https://img.shields.io/github/license/LxaNce/RealLxPhisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/LxaNce/RealLxPhisher?style=for-the-badge">
+  <img src="https://img.shields.io/github/issues/LxaNce/RealLxPhisher?color=red&style=for-the-badge">
+  <img src="https://img.shields.io/github/forks/LxaNce/RealLxPhisher?label=Fork&color=teal&style=for-the-badge">
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@
 
 <h3><p align="center">Disclaimer</p></h3>
 
-<i>Any actions and or activities related to <b>lxphisher</b> is solely your responsibility. The misuse of this toolkit can result in <b>criminal charges</b> brought against the persons in question. <b>The contributors will not be held responsible</b> in the event any criminal charges be brought against any individuals misusing this toolkit to break the law.
+<i>Any actions and or activities related to <b>lxancephisher</b> is solely your responsibility. The misuse of this toolkit can result in <b>criminal charges</b> brought against the persons in question. <b>The contributors will not be held responsible</b> in the event any criminal charges be brought against any individuals misusing this toolkit to break the law.
 
 <b>This toolkit contains materials that can be potentially damaging or dangerous for social media</b>. Refer to the laws in your province/country before accessing, using,or in any other way utilizing this in a wrong way.
 
