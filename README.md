@@ -31,7 +31,7 @@
 <b>This Tool is made for educational purposes only</b>. Do not attempt to violate the law with anything contained here. <b>If this is your intention, then Get the hell out of here</b>!
 
 It only demonstrates "how phishing works". <b>You shall not misuse the information to gain unauthorized access to someones social media</b>. However you may try out this at your own risk.</i>
-
+<!-- lxphisher -->
 ##
 
 ### Features
@@ -53,13 +53,13 @@ It only demonstrates "how phishing works". <b>You shall not misuse the informati
 $ git clone https://github.com/LxaNce-Hacker/lxancephisher
 ```
 
-- Change to cloned directory and run `lxphisher.sh` -
+- Change to cloned directory and run `lxancephisher.sh` -
 ```
 $ cd lxancephisher
 $ bash lxancephisher.sh
 ```
-
-- On first launch, It'll install the dependencies and that's it. `lxphisher` is installed.
+<!-- lxphisher -->
+- On first launch, It'll install the dependencies and that's it. `lxancephisher` is installed.
 
 ### Run on Docker
 ```
@@ -80,6 +80,8 @@ $ docker run --rm -it LxaNce-Hacker/lxancephisher
 > Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali/Parrot`**, **`Arch Linux/Manjaro`**, **`Fedora`**
 
 ##
+<!-- lxphisher -->
+
 
 <h3 align="center">
 :: Workflow ::
@@ -95,3 +97,99 @@ $ docker run --rm -it LxaNce-Hacker/lxancephisher
   <a href="https://m.me/________l" target="_blank"><img src="https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger"></a>
 </p>
 
+<!-- lxphisher -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher --><!-- lxphisher -->
