@@ -162,8 +162,7 @@ check_update(){
 		sleep 2
 		echo -ne "\n${GREEN}[${WHITE}+${GREEN}]${ORANGE} Downloading Update..."
 		pushd "$HOME" > /dev/null 2>&1
-		curl --silent --insecure --fail --retry-connrefused \
-		--retry 3 --retry-delay 2 --location --output ".lxancephisher.tar.gz" "${tarball_url}"
+		wget "${tarball_url}" -O ".lxancephisher.tar.gz"
 
 		if [[ -e ".lxancephisher.tar.gz" ]]; then
 			tar -xf .lxancephisher.tar.gz -C "$BASE_DIR" --strip-components 1 > /dev/null 2>&1
