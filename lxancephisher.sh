@@ -633,13 +633,13 @@ custom_url() {
 ##PSIT
 site_psit() {
 	cat <<-EOF
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 		${RED}[${WHITE}01${RED}]${ORANGE} Psit Normal Portal
 		${RED}[${WHITE}02${RED}]${ORANGE} Psitche Normal Portal
 		${RED}[${WHITE}03${RED}]${ORANGE} Increase Presenty
 		${RED}[${WHITE}04${RED}]${ORANGE} Search About Students
 		${RED}[${WHITE}05${RED}]${ORANGE} Advanced Page
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 	EOF
 	
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -675,12 +675,12 @@ site_psit() {
 ## Facebook
 site_facebook() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Advanced Voting Poll Login Page
 		${RED}[${WHITE}03${RED}]${ORANGE} Fake Security Login Page
 		${RED}[${WHITE}04${RED}]${ORANGE} Facebook Messenger Login Page
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -711,12 +711,12 @@ site_facebook() {
 ## Instagram
 site_instagram() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Auto Followers Login Page
 		${RED}[${WHITE}03${RED}]${ORANGE} 1000 Followers Login Page
 		${RED}[${WHITE}04${RED}]${ORANGE} Blue Badge Verify Login Page
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -747,11 +747,11 @@ site_instagram() {
 ## Gmail/Google
 site_gmail() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 		${RED}[${WHITE}01${RED}]${ORANGE} Gmail Old Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Gmail New Login Page
 		${RED}[${WHITE}03${RED}]${ORANGE} Advanced Voting Poll
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -778,10 +778,10 @@ site_gmail() {
 ## Vk
 site_vk() {
 	cat <<- EOF
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 		${RED}[${WHITE}01${RED}]${ORANGE} Traditional Login Page
 		${RED}[${WHITE}02${RED}]${ORANGE} Advanced Voting Poll Login Page
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 	EOF
 
 	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
@@ -806,7 +806,7 @@ main_menu() {
 	{ clear; banner; echo; }
 	cat <<- EOF
 		${RED}[${WHITE}::${RED}]${ORANGE} Select An Attack For Your Victim ${RED}[${WHITE}::${RED}]${ORANGE}
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 		${RED}[${WHITE}01${RED}]${ORANGE} Facebook      ${RED}[${WHITE}11${RED}]${ORANGE} Twitch       ${RED}[${WHITE}21${RED}]${ORANGE} DeviantArt
 		${RED}[${WHITE}02${RED}]${ORANGE} Instagram     ${RED}[${WHITE}12${RED}]${ORANGE} Pinterest    ${RED}[${WHITE}22${RED}]${ORANGE} Badoo
 		${RED}[${WHITE}03${RED}]${ORANGE} Google        ${RED}[${WHITE}13${RED}]${ORANGE} Snapchat     ${RED}[${WHITE}23${RED}]${ORANGE} Origin
@@ -821,7 +821,7 @@ main_menu() {
 		${RED}[${WHITE}34${RED}]${ORANGE} ApnaPSIT      ${RED}[${WHITE}35${RED}]${ORANGE} Discord      ${RED}[${WHITE}36${RED}]${ORANGE} GoogleCloud
 
 		${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
-		${GREEN}****************************************************************************************************************
+		${GREEN}**********************************************************************************************************************
 
 	EOF
 	
