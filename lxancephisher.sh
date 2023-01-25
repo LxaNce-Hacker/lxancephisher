@@ -2,7 +2,7 @@
 
 ##   lxancephisher 	: 	Automated Phishing Tool
 ##   Author 		: 	Prince Katiyar
-##   Version 		: 	4.0
+##   Version 		: 	3.1.1
 ##   Github 		: 	https://github.com/LxaNce-Hacker/lxancephisher
 
 
@@ -79,7 +79,7 @@
 ##      Copyright (C) 2022 LXANCE-HACKER (https://github.com/LxaNce-Hacker)
 ##
 
-__version__="4.0"
+__version__="3.1.1"
 
 ## DEFAULT HOST & PORT
 HOST='127.0.0.1'
