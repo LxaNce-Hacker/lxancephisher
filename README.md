@@ -85,11 +85,15 @@ $ docker run --rm -it LxaNce-Hacker/lxancephisher
 
 <h3 align="center">
 :: Workflow ::
-</h3>
+<!--</h3>
 <p align="center">
 <img src=".imgs/wf.gif"/>
+</p>-->
+<br>
+<p align="center">
+<img width="49%" src=".img/Screenshot_2023-01-27_15-11-27.png"/>
+<img width="49%" src=".img/Screenshot_2023-01-27_15-14-11.png"/>
 </p>
-
 ### Find Me on :
 <p align="left">
   <a href="https://github.com/LxaNce-Hacker" target="_blank"><img src="https://img.shields.io/badge/Github-LxaNce--Hacker-green?style=for-the-badge&logo=github"></a>
