@@ -435,6 +435,7 @@
 									<li style="padding: 5px;"><a href="https://erp.psitche.ac.in/Erp/ForgetPassword" class="btn btn-danger btn-block btn-lg">Forgot Password</a></li>
 									<li style="padding: 5px;"><a href="https://erp.psitche.ac.in/Erp/ForgetPassword" class="btn btn-success btn-block btn-lg">Create New User ( New Admission )</a></li>
 									<li style="padding: 5px;"><a href="https://erp.psitche.ac.in/Erp/ForgetPassword" class="btn btn-info btn-block btn-lg">Create Parent Login</a></li>
+									<li style="padding: 5px;"><button style="background:#ff6600; width: 100%; color: whitesmoke;" type="button" class="btn btn-lg" data-toggle="modal" data-target="#myModalFee"> Online Fee Submission </button></li>
 								</ul>
 							</div>
 
@@ -451,6 +452,36 @@
 				
 	</div>
 
+</div>
+<div id="myModalFee" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Student Details </h4>
+			</div>
+			<div class="modal-body">
+				<form method="post" enctype="multipart/form-data" action="https://erp.psitche.ac.in/StudentFees/StudentDetails">
+					<div class="row">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-3"> Student Id / Roll No : </div>
+						<div class="col-lg-3">
+							<input autocomplete="off" type="text" name="userId" required class="form-control">
+						</div>
+						<div class="col-lg-3">
+							<input type="submit" class="btn  btn-danger" value="Submit">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
 </div>
 <!-- end page container -->
 
@@ -471,6 +502,38 @@
 <script src="https://erp.psitche.ac.in/assets/js/apps.min.js"></script>
 <script src="https://erp.psitche.ac.in/assets/js/apps.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
+
+<script type="text/javascript">
+
+	$(window).load(function(){
+		//$('#myModal').modal('show');
+	});
+</script>
+<!--
+<div class="modal" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+                       
+						<div class="modal-header">
+							<center><a href="https://erp.psitche.ac.in/assets/img/Events_Image/Ignitia23.pdf" target="_blank" class="btn btn-danger btn-sm">  ! VIEW DETAIL ! </a></center>
+							<button type="button" class="close" data-dismiss="modal" style="color:#FF0000;">&times;</button>
+						</div>
+
+					
+						<div class="modal-body">
+							<center>
+								<img src="https://erp.psitche.ac.in/assets/img/Events_Image/e-InvitationIgnitia 2023.jpg" class="image-box" width="100%;">
+
+							</center>	</div>
+
+						
+
+					</div>
+				</div>
+			</div>
+            -->
+      			
 
 <script>
 	$(document).ready(function () {
