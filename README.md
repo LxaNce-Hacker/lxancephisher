@@ -91,8 +91,8 @@ $ docker run --rm -it LxaNce-Hacker/lxancephisher
 </p>-->
 <br>
 <p align="center">
-<img width="49%" src=".img/Screenshot_2023-01-27_15-11-27.png"/>
-<img width="49%" src=".img/Screenshot_2023-01-27_15-14-11.png"/>
+<img width="49%" src=".img/SS1.png"/>
+<img width="49%" src=".img/SS2.png"/>
 </p>
 ### Find Me on :
 <p align="left">
