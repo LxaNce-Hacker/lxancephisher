@@ -2,7 +2,7 @@
 
 # Make Deb Package for lxancephisher (^.^)
 _PACKAGE=lxancephisher
-_VERSION=1.3
+_VERSION=1.5
 _ARCH="all"
 PKG_NAME="${_PACKAGE}_${_VERSION}_${_ARCH}.deb"
 
