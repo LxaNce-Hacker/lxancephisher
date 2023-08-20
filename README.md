@@ -77,7 +77,7 @@ $ docker run --rm -it LxaNce-Hacker/lxancephisher
 
 > All the dependencies will be installed automatically when you run `lxancephisher` for the first time.
 
-> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali/Parrot`**, **`Arch Linux/Manjaro`**, **`Fedora`**
+> Supported Platform : **`Termux`**, **`Ubuntu/Debian/Kali/Parrot`**, **`Garuda/Arch Linux/Manjaro`**, **`Fedora`**
 
 ##
 <!-- lxphisher -->
